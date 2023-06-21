@@ -18,7 +18,7 @@ function result(succ, msg, details) {
 
 }
 
-router.get('/', async (req, res) => {
+router.get('/', async(req, res) => {
     try {
         const post = await Post.aggregate([{
                 $lookup: {
@@ -70,7 +70,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async(req, res) => {
     const inputPost = new Post({
         content: req.body.content,
         user_id: req.body.user_id
@@ -78,14 +78,14 @@ router.post('/', async (req, res) => {
 
     try {
         const post = await inputPost.save()
-        res.status(200).json(result(1, 'Insert Post Successful'))
+        res.status(200).json(result(1, 'Insert Successful'))
 
     } catch (error) {
         res.status(500).json(result(0, error.message))
     }
 })
 
-router.put('/', async (req, res) => {
+router.put('/', async(req, res) => {
     const data = {
         id: req.body.id,
         content: req.body.content,
@@ -97,9 +97,9 @@ router.put('/', async (req, res) => {
         }, data)
 
         if (post.matchedCount > 0) {
-            res.status(200).json(result(1, 'Updated Post Success!'))
+            res.status(200).json(result(1, 'Updated Success!'))
         } else {
-            res.status(200).json(result(1, 'Updated Post Failed!'))
+            res.status(200).json(result(1, 'Updated Failed!'))
         }
 
     } catch (error) {
@@ -107,16 +107,16 @@ router.put('/', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async(req, res) => {
     try {
         const post = await Post.deleteOne({
             _id: req.params.id
         })
-        
+
         if (post.deletedCount > 0) {
-            res.status(200).json(result(1, 'Deleted Post Success!'))
+            res.status(200).json(result(1, 'Deleted Success!'))
         } else {
-            res.status(200).json(result(0, 'Deleted Post Failed!'))
+            res.status(200).json(result(0, 'Deleted Failed!'))
         }
     } catch (error) {
         res.status(500).json(result(0, error.message))
